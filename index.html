@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -623,6 +624,7 @@ table.data-table tbody tr:last-child td{border-bottom:none;}
 .locked-note{display:flex;align-items:center;gap:10px;padding:12px 14px;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:12px;font-size:12.5px;color:var(--text-dim);margin-bottom:16px;}
 
 /* ---------- PUBLIC LANDING PAGE ---------- */
+html{scroll-behavior:smooth;}
 .landing-wrap{
   min-height:100vh;
   display:flex;
@@ -707,6 +709,10 @@ table.data-table tbody tr:last-child td{border-bottom:none;}
 }
 .landing-footer p{font-size:12.5px;color:var(--text-faint);margin:4px 0;}
 .landing-footer a{color:var(--gold-2);}
+details.service-card.glass > summary{list-style:none;cursor:pointer;}
+details.service-card.glass > summary::-webkit-details-marker{display:none;}
+details.service-card.glass > summary::marker{display:none;}
+details.service-card.glass[open] .lp-faq-icon, details.service-card.glass[open] summary span:last-child{transform:rotate(45deg);transition:transform .3s;}
 .public-products-wrap{padding:30px 40px;max-width:1200px;margin:0 auto;position:relative;z-index:10;min-height:100vh;}
 .public-products-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
 .public-products-head h2{font-size:26px;font-weight:700;margin:0;background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
@@ -877,75 +883,252 @@ table.data-table tbody tr:last-child td{border-bottom:none;}
     <nav class="landing-nav">
       <div class="landing-brand">
         <div class="auth-logo" style="width:38px;height:38px;margin:0;animation:none;box-shadow:0 0 0 1px rgba(255,255,255,0.12) inset,0 0 24px rgba(212,175,55,0.4);">E</div>
-        <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">ELAS</span>
+        <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800;letter-spacing:0.05em;">ELAS OS</span>
       </div>
       <div class="landing-nav-actions">
-        <button class="btn btn-ghost btn-sm" onclick="navigatePublic('products-public')">Products</button>
-        <button class="btn btn-ghost btn-sm" onclick="navigatePublic('contact')">Contact</button>
-        <button class="btn btn-primary btn-sm" onclick="showScreen('loginScreen')">Team Login</button>
+        <a class="btn btn-ghost btn-sm" href="#lp-buy" style="text-decoration:none;">Buy</a>
+        <a class="btn btn-ghost btn-sm" href="#lp-sell" style="text-decoration:none;">Sell</a>
+        <a class="btn btn-ghost btn-sm" href="#lp-faq" style="text-decoration:none;">FAQ</a>
+        <button class="btn btn-primary btn-sm" onclick="showScreen('loginScreen')">Business OS Login</button>
       </div>
     </nav>
     <header class="landing-hero">
-      <div class="landing-eyebrow">Agency Operations Platform</div>
-      <h1>Run your agency like a well-oiled machine.</h1>
-      <p>ELAS brings leads, deals, deliveries, payouts, hybrid closers and managers together in one premium workspace — designed for fast-moving digital agencies and DSA sales teams.</p>
+      <div class="landing-eyebrow">Business Operating System</div>
+      <h1>Buy a Business OS. Sell a Business OS.<br>Own the <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Infrastructure.</span></h1>
+      <p>ELAS OS is a production Business Operating System built for agencies and businesses that need their own operational infrastructure instead of paying recurring SaaS subscriptions.</p>
       <div class="landing-cta-row">
-        <button class="btn btn-primary" onclick="navigatePublic('products-public')">View Products</button>
-        <button class="btn btn-ghost" onclick="showScreen('loginScreen')">Team Login →</button>
-        <a class="btn btn-ghost" href="mailto:getelasos@gmail.com?subject=Product%20Purchase%20Enquiry" style="text-decoration:none;display:inline-flex;align-items:center;">✉ Contact Sales</a>
+        <a class="btn btn-primary" href="#lp-buy" style="text-decoration:none;display:inline-flex;align-items:center;">Explore ELAS OS</a>
+        <a class="btn btn-ghost" href="#lp-sell" style="text-decoration:none;display:inline-flex;align-items:center;">Start Selling</a>
+        <button class="btn btn-ghost" onclick="showScreen('loginScreen')">Business OS Login →</button>
       </div>
     </header>
-    <section class="landing-services">
-      <div class="landing-section-eyebrow">What we do</div>
-      <h2 class="landing-section-title">Everything your operation needs in one stack</h2>
+    <section class="landing-services" id="lp-buy">
+      <div class="landing-section-eyebrow">Buy</div>
+      <h2 class="landing-section-title">Own the <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Infrastructure.</span></h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto 40px;">ELAS OS is a Business Operating System, not another recurring SaaS subscription. It is the operating layer that runs every part of your operation.</p>
       <div class="service-grid">
         <div class="service-card glass">
           <div class="sc-icon">◎</div>
-          <h3>Lead Pipeline</h3>
-          <p>Capture, assign, follow up and convert leads — with full visibility for closers, managers and admins.</p>
+          <h3>Agency CRM</h3>
+          <p>Lead capture, scoring, kanban pipeline — with full visibility for closers, managers and admins.</p>
         </div>
         <div class="service-card glass">
           <div class="sc-icon">▣</div>
-          <h3>Project Delivery</h3>
-          <p>Track every project from assignment through freelancer delivery to client sign-off with public tracking.</p>
+          <h3>Lead Management</h3>
+          <p>Assign, follow up and convert leads with full audit trail from first contact to closed deal.</p>
         </div>
         <div class="service-card glass">
           <div class="sc-icon">🤝</div>
-          <h3>Hybrid Closer Network</h3>
-          <p>Onboard and manage loan closers, product closers and SaaS closers with split-commission logic built in.</p>
+          <h3>Client Management</h3>
+          <p>Manage client accounts, track ongoing projects, and give clients their own portal with status visibility.</p>
         </div>
         <div class="service-card glass">
           <div class="sc-icon">💰</div>
-          <h3>Wallets & Payouts</h3>
-          <p>Every closer has a real running balance — earned commissions minus logged payouts — all auditable in one view.</p>
+          <h3>Project Operations</h3>
+          <p>Track every project from assignment through freelancer delivery to client sign-off — all in one flow.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">📊</div>
+          <h3>Role-Based Dashboards</h3>
+          <p>Admin, Closer, DSA Closer, Delivery Partner, Freelancer, Client — each with scoped data access.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">📦</div>
+          <h3>Sales Tracking</h3>
+          <p>Structured deal forms for loans, products and SaaS sales — with closed/lost and paid/delivered tracking.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">🔐</div>
+          <h3>Commission &amp; Payout Tracking</h3>
+          <p>Every closer has a real running balance — commissions minus payouts — all auditable in one view.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">☁</div>
+          <h3>Firebase-Backed</h3>
+          <p>Local-first with real-time Firebase sync. Your data lives in Firebase, not on a third-party server.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-services" id="lp-sell" style="background:radial-gradient(ellipse at 80% 50%,rgba(79,70,229,0.08) 0%,transparent 60%);">
+      <div class="landing-section-eyebrow">Sell</div>
+      <h2 class="landing-section-title">Turn Business Infrastructure Into <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Revenue.</span></h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto 40px;">ELAS OS is designed to be sold — not just used. Build a sales network, onboard closers, and earn on every deal.</p>
+      <div class="service-grid">
+        <div class="service-card glass">
+          <div class="sc-icon">🤝</div>
+          <h3>Closer Onboarding</h3>
+          <p>Onboard closers through your manager. Issue login credentials, assign product material, and give them their own workspace.</p>
         </div>
         <div class="service-card glass">
           <div class="sc-icon">📦</div>
           <h3>Material Assignments</h3>
-          <p>Managers assign sales kits, videos, Drive links and instructions to closers — closers see everything in their dashboard.</p>
+          <p>Push sales videos, drive links and product instructions to assigned closers automatically.</p>
         </div>
         <div class="service-card glass">
-          <div class="sc-icon">👔</div>
-          <h3>Manager & Admin Oversight</h3>
-          <p>Admins monitor every manager, closer, lead and payout. Managers run their own closer team with clear scope.</p>
+          <div class="sc-icon">📊</div>
+          <h3>Team Performance</h3>
+          <p>Track every closer's leads, deals, closed value and commission in real time.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">💸</div>
+          <h3>Manager Earnings</h3>
+          <p>Managers receive commission configured per their team setup, visible directly in their wallet.</p>
         </div>
       </div>
     </section>
+
+    <section class="landing-services" id="lp-earn">
+      <div class="landing-section-eyebrow">Own</div>
+      <h2 class="landing-section-title">From access to <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">earnings.</span></h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto 40px;">A complete Business OS, not a tool. Every module you need to run a modern sales-led operation.</p>
+      <div class="service-grid">
+        <div class="service-card glass">
+          <div class="sc-icon">🔑</div>
+          <h3>Get Access</h3>
+          <p>Reach out to ELAS. Receive your account, log in to the Business OS, and step into your assigned workspace.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">⚙</div>
+          <h3>Run Your Business</h3>
+          <p>Use the OS to manage your leads, clients, projects, finances and operations from one place.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">👥</div>
+          <h3>Build Your Team</h3>
+          <p>Onboard closers through your manager. Assign them sales material and tracked product kits.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">📈</div>
+          <h3>Sell &amp; Track</h3>
+          <p>Closers manage their permitted leads, close deals, and update the system. You see everything live.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">💰</div>
+          <h3>Manage Earnings</h3>
+          <p>Commissions flow into wallets, payouts are logged, and balances are always auditable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-services" id="lp-roles" style="background:radial-gradient(ellipse at 20% 50%,rgba(212,175,55,0.06) 0%,transparent 60%);">
+      <div class="landing-section-eyebrow">Role Ecosystem</div>
+      <h2 class="landing-section-title">One OS. <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Five roles.</span> Zero confusion.</h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto 40px;">Every account has a role. Every action is scoped to that role. Permissions are enforced server-side in the data layer.</p>
+      <div class="service-grid" style="max-width:700px;margin:0 auto;">
+        <div class="service-card glass" style="border-color:rgba(212,175,55,0.3);">
+          <div class="sc-icon">👑</div>
+          <h3>Admin</h3>
+          <p>Full system visibility, all operations, user management.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">📋</div>
+          <h3>Manager</h3>
+          <p>Team operations, closer onboarding, performance monitoring.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">🎯</div>
+          <h3>Closer / DSA Closer</h3>
+          <p>Own leads, close deals, track commission in wallet.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">📦</div>
+          <h3>Delivery Partner &amp; Freelancer</h3>
+          <p>Accept tasks, deliver work, manage revisions and sign-off.</p>
+        </div>
+        <div class="service-card glass">
+          <div class="sc-icon">🧑</div>
+          <h3>Customer</h3>
+          <p>Track project status and delivery progress.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-services" id="lp-premium">
+      <div class="landing-section-eyebrow" style="color:var(--gold);">Infrastructure</div>
+      <h2 class="landing-section-title" style="font-size:clamp(24px,3vw,40px);max-width:800px;">You're not buying a template.<br>You're acquiring the <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">operating layer</span> behind a business.</h2>
+      <p style="text-align:center;font-size:16px;color:var(--text-dim);max-width:680px;margin:0 auto 40px;">ELAS OS is the system that runs the business. Lead flow, sales operations, project delivery, commission accounting, role-based access — engineered as one cohesive platform.</p>
+      <div style="text-align:center;">
+        <a class="btn btn-primary" href="#lp-buy" style="text-decoration:none;display:inline-flex;align-items:center;">Explore ELAS OS</a>
+      </div>
+    </section>
+
+    <section class="landing-services" id="lp-faq">
+      <div class="landing-section-eyebrow">FAQ</div>
+      <h2 class="landing-section-title">Common <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">questions.</span></h2>
+      <div class="service-grid" style="max-width:700px;margin:0 auto;">
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">What is ELAS OS?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">ELAS OS is a production Business Operating System for agencies and DSA sales teams — combining CRM, lead management, project operations, commission tracking and role-based dashboards in one place.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">Who is ELAS OS for?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">Agencies, sales operations, DSA teams, and any business that needs its own operational infrastructure rather than paying for a stack of disconnected tools.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">What does it include?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">CRM, leads, clients, projects, roles (Admin / Manager / Closer / DSA Closer / Delivery Partner / Freelancer / Client), sales tracking, commission and payout tracking, and operational analytics.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">Is ELAS a subscription?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">ELAS OS is positioned as acquired business infrastructure, not a recurring SaaS subscription. Contact us for current acquisition terms.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">How does the Closer model work?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">A Closer is onboarded by a Manager or Admin. They receive login credentials, get assigned sales material, manage their permitted leads, close deals, and earn commission tracked in their wallet.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">How do I become a Closer?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">Contact us at <a href="mailto:getelasos@gmail.com" style="color:var(--gold);">getelasos@gmail.com</a> with subject "Closer Application" and we will route you to the right Manager.</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">How do I become a Manager?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">Email <a href="mailto:getelasos@gmail.com" style="color:var(--gold);">getelasos@gmail.com</a> with subject "Manager Application".</p>
+        </details>
+        <details class="service-card glass" style="padding:20px;cursor:pointer;">
+          <summary style="list-style:none;font-weight:600;color:#fff;display:flex;justify-content:space-between;align-items:center;">How do I contact ELAS?<span style="color:var(--gold);font-size:18px;">+</span></summary>
+          <p style="margin:12px 0 0;font-size:13.5px;color:var(--text-dim);line-height:1.55;">General: <a href="mailto:getelasos@gmail.com" style="color:var(--gold);">getelasos@gmail.com</a>. Customer help: <a href="mailto:helpgetelasos@gmail.com" style="color:var(--gold);">helpgetelasos@gmail.com</a>.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="landing-services" id="lp-contact">
+      <div class="landing-section-eyebrow">Contact</div>
+      <h2 class="landing-section-title">Get in touch.</h2>
+      <p style="text-align:center;font-size:15px;color:var(--text-dim);max-width:560px;margin:0 auto 40px;">General business and customer help.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+        <a class="btn" href="mailto:getelasos@gmail.com" style="background:rgba(17,24,39,0.6);border:1px solid rgba(212,175,55,0.2);color:var(--gold);padding:12px 24px;border-radius:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">✉ getelasos@gmail.com</a>
+        <a class="btn" href="mailto:helpgetelasos@gmail.com" style="background:rgba(17,24,39,0.6);border:1px solid rgba(212,175,55,0.2);color:var(--gold);padding:12px 24px;border-radius:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px;">✉ helpgetelasos@gmail.com</a>
+      </div>
+    </section>
+
+    <section id="lp-cta" style="padding:100px 24px;text-align:center;background:radial-gradient(ellipse at 50% 0%,rgba(79,70,229,0.12) 0%,transparent 60%);">
+      <h2 style="font-size:clamp(28px,4vw,52px);font-weight:900;letter-spacing:-0.02em;margin:0 0 16px;color:#fff;">Build on infrastructure you <span style="background:linear-gradient(135deg,var(--gold),var(--gold-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">control.</span></h2>
+      <p style="font-size:18px;color:var(--text-dim);margin:0 0 40px;">Step into ELAS OS. Run the business. Sell the business. Own the layer beneath it.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+        <a class="btn btn-primary" href="#lp-buy" style="text-decoration:none;display:inline-flex;align-items:center;">Explore ELAS OS</a>
+        <a class="btn btn-ghost" href="#lp-sell" style="text-decoration:none;display:inline-flex;align-items:center;">Start Selling</a>
+        <button class="btn btn-ghost" onclick="showScreen('loginScreen')">Business OS Login</button>
+      </div>
+    </section>
+
     <section class="landing-cta">
       <div class="landing-cta-card glass">
         <h3>Ready to grow with ELAS?</h3>
-        <p>Browse our products, request a purchase by email, or sign in to your team workspace.</p>
+        <p>Step into the Business OS. Run the business. Sell the business. Own the layer beneath it.</p>
         <div class="landing-cta-row" style="margin-top:8px;">
-          <button class="btn btn-primary" onclick="navigatePublic('products-public')">Browse Products</button>
+          <a class="btn btn-primary" href="#lp-buy" style="text-decoration:none;display:inline-flex;align-items:center;">Explore ELAS OS</a>
+          <button class="btn btn-ghost" onclick="showScreen('loginScreen')">Business OS Login</button>
           <a class="btn btn-ghost" href="mailto:helpgetelasos@gmail.com?subject=Help%20%26%20Support" style="text-decoration:none;display:inline-flex;align-items:center;">Need help?</a>
         </div>
       </div>
     </section>
     <footer class="landing-footer">
-      <p><strong>ELAS — Agency Operations Platform</strong></p>
+      <p><strong>ELAS OS — Business Operating System</strong></p>
+      <p><a href="#lp-buy">Buy</a> · <a href="#lp-sell">Sell</a> · <a href="#lp-earn">Own</a> · <a href="#lp-faq">FAQ</a></p>
       <p>Sales &amp; Purchases: <a href="mailto:getelasos@gmail.com">getelasos@gmail.com</a></p>
       <p>Help &amp; Support: <a href="mailto:helpgetelasos@gmail.com">helpgetelasos@gmail.com</a></p>
-      <p style="margin-top:8px;opacity:0.7;">© ELAS · Built for digital agencies and DSA sales teams</p>
+      <p style="margin-top:8px;opacity:0.7;">© ELAS · Business Operating System</p>
     </footer>
   </div>
 </div>
@@ -1935,6 +2118,136 @@ function leadOptions(){ return getAll('leads').map(c=>({value:c.id,label:c.clien
 function closerName(id){ const c=getById('closers',id); return c? c.name : '—'; }
 function dpName(id){ const c=getById('deliveryPartners',id); return c? c.name : '—'; }
 function freelancerName(id){ const c=getById('freelancers',id); return c? c.name : '—'; }
+
+/* =====================================================================
+   7a. ROLE / OWNERSHIP SECURITY GUARDS
+   Every role-sensitive mutation MUST call canMutate() before writing.
+   This is server-of-truth: a hidden button is NOT enough.
+   ===================================================================== */
+
+// Which roles count as "admin authority" for admin-only writes
+const ADMIN_ROLES = ['admin','loanmanager','productmanager','servicemanager','manager'];
+
+// Returns the user's entityId, or null if they don't have one
+function myEntityId(){
+  return CURRENT_USER ? CURRENT_USER.entityId : null;
+}
+
+// Master permission matrix. A mutation is allowed if any role in `allow` matches.
+//   entityKey: which collection (e.g. 'leads', 'users', 'projects')
+//   recordId: optional — if set, also check ownership/scope
+//   action: 'create' | 'edit' | 'delete' | 'update'
+//   field: optional — for field-level restrictions (e.g. closerCommissionPaid)
+function canMutate(entityKey, recordId, action, field){
+  if(!CURRENT_USER) return false;
+  const role = CURRENT_USER.role;
+  const eid = myEntityId();
+
+  // Admin can do anything
+  if(role === 'admin') return true;
+
+  // ===== ENTITY-LEVEL RULES =====
+  switch(entityKey){
+    case 'users':
+      // Only admin can create/edit/delete user accounts
+      return false;
+    case 'managers':
+      // Only admin manages manager profiles
+      return false;
+    case 'closerAssignments':
+    case 'clientRequests':
+    case 'payoutProfiles':
+      // These are admin-monitored; a closer can only edit their own payout profile
+      if(role === 'closer' && entityKey === 'payoutProfiles' && field === 'self') return true;
+      return ADMIN_ROLES.includes(role);
+    case 'closers':
+    case 'deliveryPartners':
+    case 'freelancers':
+    case 'clients':
+    case 'dsaClosers':
+      // Only admin/manager can create/edit/delete these profiles
+      if(action === 'create' || action === 'delete') return ADMIN_ROLES.includes(role);
+      // For edit: managers can edit their own team's records, admin can edit all
+      if(recordId){
+        const r = getById(entityKey, recordId);
+        if(!r) return false;
+        if(role === 'manager' && r.assignedManagerId === eid) return true;
+      }
+      return false;
+    case 'products':
+    case 'productSales':
+      // Product manager / admin only
+      if(role === 'productmanager') return true;
+      return false;
+    case 'projects':
+      // Closer can only edit their own (for status/notes), but NEVER financial fields
+      if(role === 'closer' && recordId){
+        const p = getById('projects', recordId);
+        if(p && p.closerId === eid){
+          // Field-level: closer CANNOT set financial/paid-out fields
+          if(field && ['closerCommissionPaid','dpCommissionPaid','freelancerCostPaid','advancePayment','totalPrice','closerCommission','dpCommission','freelancerCost'].includes(field)) return false;
+          return true;
+        }
+      }
+      // Manager can edit their team's projects
+      if(role === 'manager' && recordId){
+        const p = getById('projects', recordId);
+        if(p && p.assignedManagerId === eid) return true;
+      }
+      // Loan/Service managers
+      if(role === 'loanmanager' || role === 'servicemanager') return true;
+      return false;
+    case 'leads':
+      // Closer can edit their own leads (status/notes), but NOT reassign closer
+      if(role === 'closer' && recordId){
+        const l = getById('leads', recordId);
+        if(l && l.assignedCloserId === eid){
+          if(field && field === 'assignedCloserId') return false;
+          return true;
+        }
+      }
+      if(role === 'closer' && action === 'create') return true; // can add own leads
+      if(role === 'manager' || role === 'productmanager' || role === 'loanmanager' || role === 'servicemanager') return true;
+      return false;
+    case 'loanDeals':
+    case 'productDeals':
+    case 'saasSales':
+      // DSA closer can create + edit their own; mark closed = admin only (financial)
+      if(role === 'dsacloser' && recordId){
+        const d = getById(entityKey, recordId);
+        if(d && d.dsaCloserId === eid){
+          // Closer can create; can edit their own pending deal; but cannot mark "Closed" (admin action)
+          if(action === 'create') return true;
+          if(field === 'status' && d.status === 'Closed') return false; // already closed, no re-edit
+          if(action === 'update' && field === 'status' && ['Pending','submitted','new','awaiting'].includes(d.status)) return true;
+          return true;
+        }
+      }
+      if(role === 'loanmanager' || role === 'productmanager') return true;
+      return false;
+    case 'activities':
+    case 'notifications':
+      // Read-only for non-admin
+      return false;
+    case 'walletPayouts':
+    case 'withdrawalRequests':
+      // Admin/manager only — financial payouts
+      return ADMIN_ROLES.includes(role);
+    default:
+      // Unknown collection: only admin
+      return false;
+  }
+}
+
+// Helper to enforce a guard. If denied, shows toast and returns false.
+function requireMutate(entityKey, recordId, action, field){
+  if(!canMutate(entityKey, recordId, action, field)){
+    toast('You do not have permission to perform this action', 'error');
+    console.warn('[Security] Blocked mutation:', entityKey, recordId, action, field, 'by role:', CURRENT_USER?.role);
+    return false;
+  }
+  return true;
+}
 /* ---------- WHATSAPP CLICK-TO-CHAT (no backend needed) ---------- */
 function waNumberClean(num){
   let n = String(num||'').replace(/[^0-9]/g,'');
@@ -2137,16 +2450,27 @@ function buildFieldHTML(field, record){
 
 function openFormModal(entityKey, recordId){
   const cfg = ENTITY_CONFIG[entityKey];
+  if(!cfg){ console.warn('[Security] Unknown entity:', entityKey); return; }
+  // Role/entity-level guard — check create for new records, edit for existing
+  if(recordId){
+    if(!canMutate(entityKey, recordId, 'edit')){ toast('You do not have permission to edit this record', 'error'); return; }
+  } else {
+    if(!canMutate(entityKey, null, 'create')){ toast('You do not have permission to add this record', 'error'); return; }
+  }
   const record = recordId ? getById(cfg.coll, recordId) : null;
   MODAL_STATE = { entity: entityKey, recordId: recordId || null };
   const fieldsHTML = cfg.fields.map(f => buildFieldHTML(f, record)).join('');
+  // Strip admin-only financial fields from project form for non-admin
+  const filteredFields = CURRENT_USER.role !== 'admin'
+    ? cfg.fields.filter(f => !['closerCommissionPaid','dpCommissionPaid','freelancerCostPaid'].includes(f.key))
+    : cfg.fields;
   const title = (record ? 'Edit ' : 'Add New ') + cfg.label;
   renderModal(`
     <div class="modal-head">
       <div class="modal-title">${title}</div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
-    <div class="form-grid2">${fieldsHTML}</div>
+    <div class="form-grid2">${CURRENT_USER.role !== 'admin' ? filteredFields.map(f => buildFieldHTML(f, record)).join('') : fieldsHTML}</div>
     <div class="modal-foot">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       <button class="btn btn-primary" onclick="submitEntityForm()">${record?'Save Changes':'Create '+cfg.label}</button>
@@ -2165,6 +2489,33 @@ function openFormModal(entityKey, recordId){
 async function submitEntityForm(){
   const entityKey = MODAL_STATE.entity;
   const cfg = ENTITY_CONFIG[entityKey];
+  const recordId = MODAL_STATE.recordId;
+  const isNew = !recordId;
+  // ===== SECURITY GUARD — re-check at write time, not just at open time =====
+  if(isNew){
+    if(!canMutate(entityKey, null, 'create')){ toast('You do not have permission to add this record', 'error'); return; }
+  } else {
+    if(!canMutate(entityKey, recordId, 'edit')){ toast('You do not have permission to edit this record', 'error'); return; }
+  }
+  // Closer cannot change assignedCloserId on their own lead
+  if(entityKey === 'leads' && CURRENT_USER && CURRENT_USER.role === 'closer'){
+    const existing = recordId ? getById('leads', recordId) : null;
+    if(existing && existing.assignedCloserId && existing.assignedCloserId !== CURRENT_USER.entityId){
+      toast('You can only edit leads assigned to you', 'error'); return;
+    }
+  }
+  // Non-admin cannot write paid-out flags or prices on projects
+  if(entityKey === 'projects' && CURRENT_USER && CURRENT_USER.role !== 'admin'){
+    const finLocked = ['closerCommissionPaid','dpCommissionPaid','freelancerCostPaid'];
+    for(const k of finLocked){
+      const el = document.getElementById('f_'+k);
+      if(!el) continue;
+      const before = recordId ? (getById('projects', recordId)?.[k]) : undefined;
+      if(el.checked !== before){
+        toast('Only admin can change "'+k+'"', 'error'); return;
+      }
+    }
+  }
   const data = {};
   for(const f of cfg.fields){
     const el = document.getElementById('f_'+f.key);
@@ -2183,13 +2534,12 @@ async function submitEntityForm(){
     data[f.key] = v;
   }
   let record;
-  let isNew = !MODAL_STATE.recordId;
-  const before = isNew ? null : Object.assign({}, getById(cfg.coll, MODAL_STATE.recordId));
+  const before = isNew ? null : Object.assign({}, getById(cfg.coll, recordId));
   if(isNew){
     record = Object.assign({ id: uid(cfg.idPrefix), createdDate: todayISO() }, data);
     if(entityKey === 'projects'){ record.trackingId = await nextTrackingId(); }
   }else{
-    record = Object.assign({}, getById(cfg.coll, MODAL_STATE.recordId), data);
+    record = Object.assign({}, getById(cfg.coll, recordId), data);
   }
   const submitBtn = document.querySelector('.modal-foot .btn-primary');
   if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'Saving…'; }
@@ -2228,17 +2578,43 @@ async function submitEntityForm(){
         logActivity('Project', 'Project '+record.trackingId+' status changed: '+before.status+' → '+record.status);
         pushNotification('Project '+record.trackingId+' moved to '+record.status, 'project');
       }
-      if(before.freelancerId !== record.freelancerId && record.freelancerId){
-        logActivity('Freelancer Assignment', freelancerName(record.freelancerId)+' assigned to project '+record.trackingId);
-      }
-      if(before.dpId !== record.dpId && record.dpId){
-        logActivity('Delivery Partner Assignment', dpName(record.dpId)+' assigned to project '+record.trackingId);
-      }
       if((Number(before.advancePayment)||0) !== (Number(record.advancePayment)||0)){
         logActivity('Payment', 'Advance payment updated for '+record.trackingId+': '+fmtMoney(record.advancePayment));
         pushNotification('Payment received for '+record.clientName+' — '+fmtMoney(record.advancePayment), 'payment');
       }
     }
+  }else if(entityKey === 'closers' && isNew){
+    // Also create a login user for this closer
+    const existingClosers = getAll('closers');
+    const maxNum = existingClosers.reduce((max, c) => {
+      const m = String(c.loginId||'').match(/^CL(\d+)$/);
+      if(m) return Math.max(max, parseInt(m[1]));
+      return max;
+    }, 0);
+    const nextNum = maxNum + 1;
+    const loginId = 'CL' + String(nextNum).padStart(2, '0');
+    const pass = String(1000 + nextNum);
+    try{
+      await createUserRecord({ role:'closer', loginId, password:pass, name:record.name, entityId:record.id, status:'active' });
+      logActivity('User', 'New closer user created: '+loginId+' for '+record.name);
+      closeModal();
+      renderAll();
+      renderModal(`
+        <div class="modal-head"><div class="modal-title">Closer Created — Login Credentials</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+        <p style="font-size:13.5px;color:var(--text-dim);line-height:1.5;margin-bottom:16px;">Give these credentials to <strong style="color:var(--text);">${escapeHtml(record.name)}</strong> so they can log in.</p>
+        <div class="detail-section-title">Login Credentials</div>
+        <div class="detail-row"><span>Login ID</span><span style="font-family:monospace;font-weight:700;color:var(--gold-2);">${loginId}</span></div>
+        <div class="detail-row"><span>Password</span><span style="font-family:monospace;font-weight:700;color:var(--gold-2);">${pass}</span></div>
+        <div style="margin-top:12px;padding:10px 14px;background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:10px;font-size:12.5px;color:var(--text-dim);">Write these down now — the password cannot be retrieved later. Only the closer can reset it after first login.</div>
+        <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal()">Done</button></div>
+      `);
+      toast('Closer login credentials generated for '+record.name, 'success');
+      return;
+    }catch(err){
+      console.error('[Closer] Could not create user record:', err.message);
+    }
+  }else if(entityKey === 'closers' && !isNew){
+    logActivity('Closer', 'Closer profile updated: '+record.name);
   }else{
     logActivity(cfg.label, (isNew?'New '+cfg.label+' added: ':cfg.label+' updated: ')+(record.name||record.clientName));
   }
@@ -2266,6 +2642,12 @@ function confirmDelete(entityKey, recordId, label){
 }
 async function doDelete(entityKey, recordId, label){
   const cfg = ENTITY_CONFIG[entityKey];
+  // ===== SECURITY GUARD =====
+  if(!canMutate(entityKey, recordId, 'delete')){
+    toast('You do not have permission to delete this record', 'error');
+    console.warn('[Security] Blocked delete:', entityKey, recordId, 'by role:', CURRENT_USER?.role);
+    return;
+  }
   try{
     await removeById(cfg.coll, recordId);
   }catch(err){
@@ -2695,6 +3077,7 @@ function openLeadDetails(id){
   `);
 }
 async function addLeadNote(leadId){
+  if(!canMutate('leads', leadId, 'edit')){ toast('You can only add notes to your own leads', 'error'); return; }
   const input = document.getElementById('newLeadNoteInput');
   const text = input.value.trim();
   if(!text) return;
@@ -3017,6 +3400,7 @@ function openProjectDetails(id){
   renderModal(headerHTML + bodyHTML + `<div class="modal-foot">${footHTML}</div>`);
 }
 async function dpAssignFreelancer(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'freelancerId')) return;
   const p = getById('projects', projectId);
   const flId = document.getElementById('dpFreelancerSelect').value;
   if(!p) return;
@@ -3028,6 +3412,7 @@ async function dpAssignFreelancer(projectId){
   renderAll();
 }
 async function dpUpdateStatus(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'status')) return;
   const p = getById('projects', projectId);
   const newStatus = document.getElementById('dpStatusSelect').value;
   if(!p) return;
@@ -3043,6 +3428,7 @@ async function dpUpdateStatus(projectId){
   renderAll();
 }
 async function saveDeliveryNote(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'deliveryNotes')) return;
   const p = getById('projects', projectId);
   const text = document.getElementById('dpDeliveryNoteInput').value.trim();
   if(!p) return;
@@ -3053,6 +3439,7 @@ async function saveDeliveryNote(projectId){
   openProjectDetails(projectId);
 }
 async function freelancerUpdateStatus(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'status')) return;
   const p = getById('projects', projectId);
   const newStatus = document.getElementById('flStatusSelect').value;
   if(!p) return;
@@ -3071,6 +3458,7 @@ async function addDeliverable(projectId){
   const label = document.getElementById('flDelivLabel').value.trim();
   const link = document.getElementById('flDelivLink').value.trim();
   if(!p || !label) { toast('Please name the deliverable', 'error'); return; }
+  if(!requireMutate('projects', projectId, 'update', 'deliverables')) return;
   p.deliverables = p.deliverables || [];
   p.deliverables.push({ label, link, date: new Date().toISOString() });
   await upsert('projects', p);
@@ -3080,6 +3468,7 @@ async function addDeliverable(projectId){
   openProjectDetails(projectId);
 }
 async function addRevisionNote(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'revisionNotes')) return;
   const p = getById('projects', projectId);
   const text = document.getElementById('flRevisionNoteInput').value.trim();
   if(!p) return;
@@ -3090,6 +3479,7 @@ async function addRevisionNote(projectId){
   openProjectDetails(projectId);
 }
 async function markTaskComplete(projectId){
+  if(!requireMutate('projects', projectId, 'update', 'status')) return;
   const p = getById('projects', projectId);
   if(!p) return;
   const before = p.status;
@@ -3821,6 +4211,9 @@ function openSaasSaleForm(recordId, presetCloserId){
   `);
 }
 async function submitSaasSaleForm(){
+  if(!canMutate('saasSales', null, 'create')){
+    toast('You do not have permission to log a SaaS sale', 'error'); return;
+  }
   const customerName = document.getElementById('ss_custName').value.trim();
   const customerEmail = document.getElementById('ss_custEmail').value.trim();
   const dealAmount = Number(document.getElementById('ss_dealAmount').value);
@@ -3842,6 +4235,7 @@ async function submitSaasSaleForm(){
   closeModal(); toast('Sale saved — awaiting payment confirmation', 'success'); renderAll();
 }
 function markSaasSalePaid(id){
+  if(!requireMutate('saasSales', id, 'update', 'status')) return;
   const d = getById('saasSales', id);
   if(!d) return;
   renderModal(`
@@ -3852,6 +4246,7 @@ function markSaasSalePaid(id){
   `);
 }
 async function confirmSaasSalePaid(id){
+  if(!requireMutate('saasSales', id, 'update', 'status')) return;
   const d = getById('saasSales', id);
   const pct = Number(document.getElementById('ss_commissionPct').value)||SAAS_COMMISSION_PCT_DEFAULT;
   const closerShare = Math.round(d.dealAmount * (pct/100));
@@ -3863,6 +4258,7 @@ async function confirmSaasSalePaid(id){
   closeModal(); toast('Payment confirmed — wallet updated. Now send onboarding files.', 'success'); renderAll();
 }
 async function markSaasSaleDelivered(id){
+  if(!requireMutate('saasSales', id, 'update', 'status')) return;
   const d = getById('saasSales', id);
   const record = Object.assign({}, d, { status:'delivered', deliveredDate: new Date().toISOString() });
   try{ await upsert('saasSales', record); } catch(err){ toast('Could not save', 'error'); return; }
@@ -3894,6 +4290,7 @@ function confirmDeleteSaasSale(id, label){
   `);
 }
 async function doDeleteSaasSale(id, label){
+  if(!canMutate('saasSales', id, 'delete')){ toast('You do not have permission to delete this sale', 'error'); return; }
   try{ await removeById('saasSales', id); } catch(err){ toast('Could not delete', 'error'); return; }
   logActivity('SaaS Sale', 'Deleted sale: '+label);
   closeModal(); toast('Sale deleted', 'success'); renderAll();
@@ -4603,6 +5000,9 @@ function openProductModal(productId){
   `);
 }
 async function submitProductForm(productId){
+  if(!canMutate('products', productId || null, productId ? 'edit' : 'create')){
+    toast('Only admin/product manager can edit products', 'error'); return;
+  }
   const name = document.getElementById('prd_name').value.trim();
   const price = parseFloat(document.getElementById('prd_price').value)||0;
   if(!name || price <= 0){ toast('Product name and price are required', 'error'); return; }
@@ -4648,6 +5048,7 @@ async function deleteProduct(productId, name){
     </div>`);
 }
 async function doDeleteProduct(productId, name){
+  if(!canMutate('products', productId, 'delete')){ toast('You do not have permission to delete this product', 'error'); return; }
   await removeById('products', productId);
   const sales = getAll('productSales').filter(s=>s.productId===productId);
   for(const s of sales) await removeById('productSales', s.id);
@@ -4738,6 +5139,7 @@ async function recordProductSale(productId){
   renderAll();
 }
 async function toggleProductCommission(saleId){
+  if(!requireMutate('productSales', saleId, 'update', 'commissionPaid')) return;
   const s = getById('productSales', saleId);
   if(!s) return;
   s.commissionPaid = !s.commissionPaid;
@@ -4749,6 +5151,7 @@ async function toggleProductCommission(saleId){
   renderAll();
 }
 async function releaseZip(saleId){
+  if(!requireMutate('productSales', saleId, 'update', 'zipReleased')) return;
   const s = getById('productSales', saleId);
   if(!s) return;
   const p = getById('products', s.productId);
@@ -5474,6 +5877,7 @@ function prefillNewUserDefaults(){
   if(wField) wField.style.display = role==='admin' ? 'none' : '';
 }
 async function submitCreateUser(){
+  if(!canMutate('users', null, 'create')){ toast('Only admin can create user accounts', 'error'); return; }
   const role = document.getElementById('newUserRole').value;
   const name = document.getElementById('newUserName').value.trim();
   const loginId = document.getElementById('newUserLoginId').value.trim();
@@ -5514,6 +5918,7 @@ function openResetPasswordModal(userId){
     </div>`);
 }
 async function submitResetUserPassword(userId){
+  if(!requireMutate('users', userId, 'update', 'passwordHash')) return;
   const pass = document.getElementById('resetUserPasswordInput').value.trim();
   if(!pass || pass.length < 4){ toast('Password must be at least 4 characters', 'error'); return; }
   const u = getById('users', userId);
@@ -5525,6 +5930,7 @@ async function submitResetUserPassword(userId){
   toast('Password reset successfully', 'success');
 }
 async function toggleUserStatus(userId){
+  if(!requireMutate('users', userId, 'update')) return;
   const u = getById('users', userId);
   if(!u) return;
   u.status = u.status === 'active' ? 'disabled' : 'active';
@@ -5543,6 +5949,7 @@ function confirmDeleteUser(userId, name){
     </div>`);
 }
 async function doDeleteUser(userId, name){
+  if(!canMutate('users', userId, 'delete')){ toast('Only admin can delete user accounts', 'error'); return; }
   await removeById('users', userId);
   logActivity('User', 'User account deleted: '+name);
   closeModal();
@@ -5800,6 +6207,9 @@ function updateLoanCalcPreview(){
   el.innerHTML = `Bank pays: <strong>${fmtMoney(total)}</strong> → Closer (${pct}%): <strong style="color:var(--green)">${fmtMoney(closerShare)}</strong> · Company (${100-pct}%): <strong>${fmtMoney(companyShare)}</strong>`;
 }
 async function submitLoanDealForm(){
+  if(!canMutate('loanDeals', LOAN_FORM_STATE.recordId || null, LOAN_FORM_STATE.recordId ? 'edit' : 'create')){
+    toast('You do not have permission to log this loan deal', 'error'); return;
+  }
   const customerName = document.getElementById('ld_custName').value.trim();
   const closerId = document.getElementById('ld_closer').value;
   const bankPayout = document.getElementById('ld_bankPayout').value;
@@ -5841,6 +6251,7 @@ async function submitLoanDealForm(){
   renderAll();
 }
 async function markLoanDealClosed(id){
+  if(!requireMutate('loanDeals', id, 'update', 'status')) return;
   const d = getById('loanDeals', id);
   if(!d) return;
   const record = Object.assign({}, d, { status:'Closed' });
@@ -5876,6 +6287,7 @@ async function confirmDeleteLoanDeal(id, label){
   `);
 }
 async function doDeleteLoanDeal(id, label){
+  if(!canMutate('loanDeals', id, 'delete')){ toast('You do not have permission to delete this deal', 'error'); return; }
   try{ await removeById('loanDeals', id); }
   catch(err){ toast('Could not delete — check your connection', 'error'); return; }
   logActivity('Loan Deal', 'Loan deal deleted: '+label);
@@ -6316,6 +6728,9 @@ function openProductDealForm(recordId, presetCloserId){
   renderPdealItemsEditor();
 }
 async function submitProductDealForm(){
+  if(!canMutate('productDeals', null, 'create')){
+    toast('You do not have permission to log a product entry', 'error'); return;
+  }
   const customerName = document.getElementById('pd_custName').value.trim();
   const customerPhone = document.getElementById('pd_custPhone').value.trim();
   const closerId = document.getElementById('pd_closer').value;
@@ -6360,6 +6775,7 @@ function advanceProductDeal(id){
   }
 }
 async function confirmMarkEntered(id){
+  if(!requireMutate('productDeals', id, 'update', 'status')) return;
   const d = getById('productDeals', id);
   const record = Object.assign({}, d, { status:'entered_gromo', gromoRef: document.getElementById('pd_gromoRef').value.trim(), gromoEnteredDate: new Date().toISOString() });
   try{ await upsert('productDeals', record); } catch(err){ toast('Could not save', 'error'); return; }
@@ -6367,6 +6783,7 @@ async function confirmMarkEntered(id){
   closeModal(); toast('Marked as entered on GroMo', 'success'); renderAll();
 }
 async function confirmMarkDisbursed(id){
+  if(!requireMutate('productDeals', id, 'update', 'status')) return;
   const d = getById('productDeals', id);
   const actual = Number(document.getElementById('pd_actualCommission').value);
   if(!actual){ toast('Enter the commission amount', 'error'); return; }
@@ -6918,7 +7335,7 @@ function renderManagersView(){
   const el = document.getElementById('view-managers');
   if(CURRENT_USER.role !== 'admin'){ el.innerHTML = '<div style="padding:40px;text-align:center;color:var(--red);">Access denied.</div>'; return; }
 
-  const managers = getAll('users').filter(u => u.role === 'manager');
+  const managers = getAll('users').filter(u => ['manager','productmanager','loanmanager','servicemanager'].includes(u.role));
   const managerEntities = managers.map(m => ({ user: m, entity: getById('managers', m.entityId) }));
 
   el.innerHTML = `
@@ -6932,17 +7349,19 @@ function renderManagersView(){
     ${!managers.length ? `<div class="empty-state glass" style="padding:40px;text-align:center;color:var(--text-dim);">No managers found. Create one to get started.</div>` : `
     <div class="assign-grid">
       ${managerEntities.map(({user, entity}) => {
-        const myClosers = getAll('dsaClosers').filter(c => c.assignedManagerId === (entity?.id||''));
+        const managerId = entity?.id || user.entityId || user.id || '';
+        const myClosers = getAll('dsaClosers').filter(c => c.assignedManagerId === managerId);
+        const displayName = entity?.name || user.name || '—';
         return `<div class="assign-card glass">
           <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
             <div>
-              <h4 style="color:var(--gold-2);margin:0 0 2px;">${escapeHtml(entity?.name||user.name||'—')}</h4>
+              <h4 style="color:var(--gold-2);margin:0 0 2px;">${escapeHtml(displayName)}</h4>
               <span class="cell-dim" style="font-size:11.5px;">${escapeHtml(user.loginId||'')}</span>
             </div>
-            <span class="role-pill role-admin" style="font-size:9px;">Manager</span>
+            <span class="role-pill role-admin" style="font-size:9px;">${escapeHtml(ROLE_LABELS[user.role]||user.role)}</span>
           </div>
-          <div class="detail-row"><span>Email</span><span>${escapeHtml(entity?.email||'—')}</span></div>
-          <div class="detail-row"><span>WhatsApp</span><span>${escapeHtml(entity?.whatsapp||'—')}</span></div>
+          <div class="detail-row"><span>Email</span><span>${escapeHtml(entity?.email||user.email||'—')}</span></div>
+          <div class="detail-row"><span>WhatsApp</span><span>${escapeHtml(entity?.whatsapp||user.whatsapp||'—')}</span></div>
           <div class="detail-row"><span>Closers Onboarded</span><span style="color:var(--gold);font-weight:700;">${myClosers.length}</span></div>
           <div style="margin-top:12px;display:flex;gap:8px;">
             <button class="btn btn-ghost btn-sm" onclick="openManagerForm('${user.id}')" style="flex:1;">Edit</button>
@@ -6974,6 +7393,9 @@ function openManagerForm(userId){
 }
 
 async function submitManagerForm(userId){
+  if(!canMutate('managers', userId || null, userId ? 'edit' : 'create')){
+    toast('Only admin can manage manager accounts', 'error'); return;
+  }
   const name = document.getElementById('mgr_name').value.trim();
   const loginId = document.getElementById('mgr_login').value.trim().toUpperCase();
   const pass = document.getElementById('mgr_pass')?.value || '';
@@ -7102,6 +7524,12 @@ function openCloserLeadForm(leadId){
 }
 
 async function submitCloserLeadForm(leadId){
+  // ===== SECURITY GUARD =====
+  if(leadId){
+    if(!canMutate('leads', leadId, 'edit')){ toast('You can only edit your own leads', 'error'); return; }
+  } else {
+    if(!canMutate('leads', null, 'create')){ toast('You do not have permission to add a lead', 'error'); return; }
+  }
   const name = document.getElementById('clf_name').value.trim();
   const phone = document.getElementById('clf_phone').value.trim();
   if(!name || !phone){ toast('Customer name and phone are required', 'error'); return; }
@@ -7236,6 +7664,9 @@ function openPayoutProfileForm(profileId){
 }
 
 async function submitPayoutProfileForm(profileId){
+  if(!canMutate('payoutProfiles', profileId || null, profileId ? 'edit' : 'create', 'self')){
+    toast('You can only edit your own payout profile', 'error'); return;
+  }
   const fullName = document.getElementById('pp_fullName').value.trim();
   if(!fullName){ toast('Full Name is required', 'error'); return; }
   const upi = document.getElementById('pp_upi').value.trim();
@@ -7321,6 +7752,9 @@ function openAssignmentForm(assignId){
 }
 
 async function submitAssignmentForm(assignId){
+  if(!canMutate('closerAssignments', assignId || null, assignId ? 'edit' : 'create')){
+    toast('Only admin/manager can create material assignments', 'error'); return;
+  }
   const closerId = document.getElementById('asgn_closer').value.trim();
   const productName = document.getElementById('asgn_product').value.trim();
   if(!closerId || !productName){ toast('Closer and Product Name are required', 'error'); return; }
@@ -7413,6 +7847,9 @@ function openClientRequestForm(reqId){
 }
 
 async function submitClientRequestForm(reqId){
+  if(!canMutate('clientRequests', reqId || null, reqId ? 'edit' : 'create')){
+    toast('Only admin can edit client requests', 'error'); return;
+  }
   const name = document.getElementById('cr_name').value.trim();
   const email = document.getElementById('cr_email').value.trim();
   if(!name || !email){ toast('Customer name and email are required', 'error'); return; }
@@ -7507,6 +7944,7 @@ function renderCloserPayoutsAdminView(){
 }
 
 function preparePayoutMessage(closerId){
+  if(!requireMutate('walletPayouts', closerId, 'update', 'message')) return;
   const c = getById('dsaClosers', closerId);
   const profile = getAll('payoutProfiles').find(p => (p.closerId||'') === closerId);
   if(!profile || !profile.fullName){ toast('Closer has not completed their payout profile', 'error'); return; }
