@@ -1238,6 +1238,7 @@ details.service-card.glass[open] .lp-faq-icon, details.service-card.glass[open] 
       <section class="view-section" id="view-myproductdeals"></section>
       <section class="view-section" id="view-payouts"></section>
       <section class="view-section" id="view-mywallet"></section>
+      <section class="view-section" id="view-mycloserpayouts"></section>
       <section class="view-section" id="view-saassales"></section>
       <section class="view-section" id="view-mysaassales"></section>
       <!-- ============ PUBLIC PRODUCTS CATALOG ============ -->
@@ -1258,6 +1259,8 @@ details.service-card.glass[open] .lp-faq-icon, details.service-card.glass[open] 
       <section class="view-section" id="view-client-requests"></section>
       <!-- ============ ADMIN — CLOSER PAYOUTS MONITORING ============ -->
       <section class="view-section" id="view-closer-payouts-admin"></section>
+      <!-- ============ MANAGER — TEAM CLOSER PAYOUTS ============ -->
+      <section class="view-section" id="view-team-payouts"></section>
     </main>
   </div>
 </div>
@@ -1887,6 +1890,7 @@ const NAV_CONFIG = {
       {view:'mydsadeals', ic:'🏦', label:'My Loan Deals'},
       {view:'myproductdeals', ic:'🧾', label:'My Product Entries'},
       {view:'mywallet', ic:'💰', label:'My Wallet'},
+      {view:'mycloserpayouts', ic:'📋', label:'My Payout Requests'},
       {view:'perfvideos', ic:'📈', label:'Market Trend Videos'},
       {view:'mydocuments', ic:'📄', label:'My Documents', badge:'navDocsBadge'}
     ]},
@@ -1981,6 +1985,9 @@ const NAV_CONFIG = {
     {group:'Finance', items:[
       {view:'mywallet', ic:'💰', label:'My Earnings'}
     ]},
+    {group:'Team Payouts', items:[
+      {view:'team-payouts', ic:'💸', label:'Team Payouts'}
+    ]},
     {group:'System', items:[{view:'settings', ic:'⚙', label:'Settings'}]}
   ],
   dsacloser:[
@@ -2072,6 +2079,7 @@ const VIEW_META = {
   myproductdeals:{title:'My Product Entries', sub:'Products you\'ve gotten customers to take, and your 70% commission on each'},
   payouts:{title:'Closer Payouts', sub:'Real wallet balances for every hybrid closer — log a payout once you\'ve actually sent the money'},
   mywallet:{title:'My Wallet', sub:'Your real earnings and payout history'},
+  mycloserpayouts:{title:'My Payout Requests', sub:'Track the status of your payout requests to admin'},
   saassales:{title:'SaaS Sales', sub:'Deals where the customer pays you directly for the SaaS product — confirm payment to credit closer commission'},
   mysaassales:{title:'My SaaS Sales', sub:'Sales you\'ve closed for the SaaS product and their status'},
   managers:{title:'Managers', sub:'Manager profiles, their closers, leads and deals'},
@@ -2081,7 +2089,8 @@ const VIEW_META = {
   'closer-payout-profile':{title:'Payout Profile', sub:'Add your bank / UPI details to receive payouts'},
   'my-materials':{title:'Material Assignments', sub:'Assign products, videos and instructions to your closers'},
   'client-requests':{title:'Client Requests', sub:'Manually log client purchase requests received by email'},
-  'closer-payouts-admin':{title:'Closer Payouts', sub:'Monitor every closer\'s wallet balance, payout profile and pending payout'}
+  'closer-payouts-admin':{title:'Closer Payouts', sub:'Monitor every closer\'s wallet balance, payout profile and pending payout'},
+  'team-payouts':{title:'Team Payouts', sub:'Read-only view of your assigned closers\' wallet balances, payout profiles and pending requests'}
 };
 
 function navigateTo(view){
@@ -4901,7 +4910,17 @@ function videoEmbedHTML(url, label){
 
 /* ---------- 31a. ADMIN — PRODUCT MANAGEMENT ----------------------- */
 function renderProductsView(){
-  const products = getAll('products').slice().sort((a,b)=>new Date(b.createdDate)-new Date(a.createdDate));
+  // Product Managers see only products assigned to them (by users.id)
+  const uid2 = CURRENT_USER.id;
+  const isProductManager = CURRENT_USER.role === 'productmanager';
+  let products = getAll('products').slice().sort((a,b)=>new Date(b.createdDate)-new Date(a.createdDate));
+  if(isProductManager){
+    // Support legacy field names: assignedManagerId, assignedManagerUserId, assignedManagerLoginId, managerId, productManagerId
+    products = products.filter(p => {
+      const v = p.assignedManagerId || p.assignedManagerUserId || p.assignedManagerLoginId || p.managerId || p.productManagerId || '';
+      return v === uid2;
+    });
+  }
   document.getElementById('view-products').innerHTML = `
     <div class="panel glass">
       <div class="panel-head">
@@ -4965,6 +4984,10 @@ function openProductModal(productId){
   const p = productId ? getById('products', productId) : null;
   const closers = getAll('closers');
   const assignedCloserIds = p ? (p.assignedCloserIds||[]) : [];
+  // Product Manager assignment — list of productmanager-role users
+  const productManagers = getAll('users').filter(u => u.role === 'productmanager' && u.status !== 'disabled');
+  // Resolve current selected manager (supports legacy values: user.id, loginId, or entityId)
+  const currentMgrId = p ? (p.assignedManagerId || p.assignedManagerUserId || p.assignedManagerLoginId || p.managerId || p.productManagerId || p.productManager || '') : '';
   renderModal(`
     <div class="modal-head"><div class="modal-title">${p?'Edit Product':'Add New Product'}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="form-grid2">
@@ -4982,6 +5005,14 @@ function openProductModal(productId){
       <div class="field" style="grid-column:1/-1"><label>Delivery File URL <span style="font-size:11px;color:var(--text-faint)">(ZIP, PDF, ebook, template — any direct download link — released on payment)</span></label><input type="url" id="prd_zipUrl" value="${escapeHtml(p?.zipUrl||'')}" placeholder="https://drive.google.com/..."></div>
       <div class="field"><label>Access Password <span style="font-size:11px;color:var(--text-faint)">(optional)</span></label><input type="text" id="prd_zipPass" value="${escapeHtml(p?.zipPassword||'')}" placeholder="Leave blank if no password"></div>
       <div class="field"><label>Tech Stack / Tags</label><input type="text" id="prd_tags" value="${escapeHtml(p?.tags||'')}" placeholder="React, Node.js, Firebase…"></div>
+    </div>
+    <div class="detail-section-title">Assign Product Manager</div>
+    <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Select the Product Manager who will own this product. They will see it in their Products tab.</p>
+    <div class="field" style="margin-bottom:14px;">
+      <select id="prd_manager">
+        <option value="">— None (Admin only) —</option>
+        ${productManagers.map(u=>`<option value="${u.id}" ${u.id===currentMgrId||u.loginId===currentMgrId||u.entityId===currentMgrId?' selected':''}>${escapeHtml(u.name)} (${escapeHtml(u.loginId)})</option>`).join('')}
+      </select>
     </div>
     <div class="detail-section-title">Assign Closers</div>
     <p style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Tick the closers who will sell this product. They will see the purpose video and product info — not the ZIP or password.</p>
@@ -5008,6 +5039,8 @@ async function submitProductForm(productId){
   if(!name || price <= 0){ toast('Product name and price are required', 'error'); return; }
   const closers = getAll('closers');
   const assignedCloserIds = closers.filter(c => document.getElementById('pc_'+c.id)?.checked).map(c=>c.id);
+  // Store the assigned product manager's USER record id (stable, never null for productmanager-role users)
+  const assignedManagerId = (document.getElementById('prd_manager')?.value || '').trim();
   const isNew = !productId;
   const existing = productId ? getById('products', productId) : null;
   const record = Object.assign(existing||{}, {
@@ -5023,13 +5056,14 @@ async function submitProductForm(productId){
     zipPassword: document.getElementById('prd_zipPass').value.trim(),
     tags: document.getElementById('prd_tags').value.trim(),
     assignedCloserIds,
+    assignedManagerId,
     createdDate: existing?.createdDate || todayISO()
   });
   const btn = document.querySelector('.modal-foot .btn-primary');
   if(btn){ btn.disabled=true; btn.textContent='Saving…'; }
   try{
     await upsert('products', record);
-    logActivity('Marketplace', (isNew?'Product listed: ':'Product updated: ')+name);
+    logActivity('Marketplace', (isNew?'Product listed: ':'Product updated: ')+name+(assignedManagerId?' [mgr: '+assignedManagerId+']':''));
     closeModal();
     toast('Product '+(isNew?'created':'updated')+' successfully', 'success');
     renderAll();
@@ -6916,6 +6950,8 @@ function openLogPayoutForm(closerId, requestId){
   `);
 }
 async function submitLogPayout(closerId){
+  // Guard: only admin can mark payouts as paid
+  if(CURRENT_USER.role !== 'admin'){ toast('Only admin can mark a payout as paid', 'error'); return; }
   const amount = Number(document.getElementById('po_amount').value);
   const requestId = document.getElementById('po_requestId').value;
   if(!amount || amount<=0){ toast('Enter a valid amount', 'error'); return; }
@@ -6928,7 +6964,44 @@ async function submitLogPayout(closerId){
   logActivity('Payout', 'Paid '+fmtMoney(amount)+' to '+dsaCloserName(closerId));
   const closerUser = getAll('users').find(u=>u.entityId===closerId);
   pushNotification('₹'+amount.toLocaleString('en-IN')+' has been paid out to you', 'success', { targetUserId: closerUser?closerUser.id:null });
-  closeModal(); toast('Payout logged', 'success'); renderAll();
+  // Send email to closer (uses existing mailto mechanism)
+  sendPayoutCompletionEmail(closerId, amount, document.getElementById('po_note').value.trim());
+  closeModal(); toast('Payout logged — email notification prepared', 'success'); renderAll();
+}
+
+function sendPayoutCompletionEmail(closerId, amount, note){
+  // Uses existing mailto: mechanism (no SMTP) — opens email client with prefilled message
+  const c = dsaCloserById(closerId);
+  const closerUser = getAll('users').find(u => u.entityId === closerId);
+  const profile = getAll('payoutProfiles').find(p => (p.closerId||'') === closerId);
+  const closerEmail = (profile && profile.email) || (c && c.email) || (closerUser && closerUser.email) || '';
+  const subject = encodeURIComponent('ELAS — Payout of '+fmtMoney(amount)+' completed');
+  const body = encodeURIComponent([
+    'Hi '+(c?c.name:'')+',',
+    '',
+    'Your payout has been completed.',
+    '',
+    'Amount: '+fmtMoney(amount),
+    note ? 'Reference: '+note : '',
+    'Date: '+new Date().toLocaleString('en-IN'),
+    '',
+    'It will reach you via your registered payment method (UPI / bank) within the usual processing window.',
+    '',
+    'Thank you for your work with ELAS.',
+    '',
+    'Best,',
+    'ELAS Team'
+  ].filter(Boolean).join('\n'));
+  if(closerEmail){
+    // Open mail client with prefilled email
+    const mailto = 'mailto:'+closerEmail+'?subject='+subject+'&body='+body;
+    try { window.open(mailto, '_blank'); } catch(e) { /* ignore */ }
+    // Also log so admin can see the email was attempted
+    logActivity('Payout', 'Email notification prepared for '+(c?c.name:'')+' ('+closerEmail+')');
+  } else {
+    // No email on file — log only
+    logActivity('Payout', 'No email on file for '+(c?c.name:'')+' — email notification skipped');
+  }
 }
 function viewWalletHistory(closerId){
   const txns = walletTransactions(closerId);
@@ -6991,6 +7064,106 @@ async function submitWithdrawalRequest(){
   closeModal(); toast('Withdrawal requested — processed within '+WITHDRAWAL_SLA_HOURS+'h', 'success'); renderAll();
 }
 
+function renderMyCloserPayoutsView(){
+  // Closer view: shows their own payout request history
+  const entityId = CURRENT_USER.entityId;
+  const myRequests = getAll('withdrawalRequests')
+    .filter(w => (w.closerId||'') === entityId)
+    .sort((a,b) => new Date(b.requestedDate) - new Date(a.requestedDate));
+  const totalEarned = walletEarned(entityId);
+  const totalPaid = walletPaidOut(entityId);
+  const balance = walletBalance(entityId);
+  document.getElementById('view-mycloserpayouts').innerHTML = `
+    <div class="panel glass" style="text-align:center;padding:24px 20px;margin-bottom:20px;">
+      <div class="stat-grid" style="max-width:500px;margin:0 auto 20px;">
+        <div class="stat-card glass"><div class="stat-val">${fmtMoney(totalEarned)}</div><div class="stat-label">Total Earned</div></div>
+        <div class="stat-card glass"><div class="stat-val" style="color:var(--green);">${fmtMoney(totalPaid)}</div><div class="stat-label">Paid Out</div></div>
+        <div class="stat-card glass"><div class="stat-val" style="color:${balance>0?'var(--amber)':'var(--green)'};">${fmtMoney(balance)}</div><div class="stat-label">Balance Due</div></div>
+      </div>
+      <p style="font-size:13px;color:var(--text-dim);margin:0 0 12px;">To request a payout, go to <strong>My Wallet</strong>. This page shows your request history.</p>
+      <button class="btn btn-primary btn-sm" onclick="navigateTo('mywallet')">Go to My Wallet</button>
+    </div>
+    <div class="panel glass">
+      <div class="panel-head"><div class="panel-title">Payout Request History</div></div>
+      ${myRequests.length ? `
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Amount</th><th>Status</th><th>Requested On</th><th>Processed On</th></tr></thead><tbody>
+        ${myRequests.map(w => `
+        <tr>
+          <td class="cell-strong">${fmtMoney(w.amount)}</td>
+          <td>
+            ${w.status === 'paid' ? '<span class="status-pill status-active">Paid</span>' :
+              w.status === 'requested' ? '<span class="status-pill status-pending">Processing</span>' :
+              '<span class="status-pill status-disabled">'+escapeHtml(w.status||'—')+'</span>'}
+          </td>
+          <td class="cell-dim">${fmtDateTime(w.requestedDate)}</td>
+          <td class="cell-dim">${w.paidDate ? fmtDateTime(w.paidDate) : '—'}</td>
+        </tr>`).join('')}
+      </tbody></table></div>` :
+      '<p style="font-size:13px;color:var(--text-faint);padding:20px;text-align:center;">No payout requests yet.</p>'}
+    </div>
+  `;
+}
+
+function renderTeamPayoutsView(){
+  // Manager view: read-only team closer payout status
+  // Determine which closers belong to this manager
+  const role = CURRENT_USER.role;
+  let myClosers = [];
+  if(role === 'manager'){
+    // Generic manager: closers assigned via dsaClosers.assignedManagerId
+    const mgrEntityId = CURRENT_USER.entityId || CURRENT_USER.id;
+    myClosers = getAll('dsaClosers').filter(c => (c.assignedManagerId||'') === mgrEntityId);
+  } else if(role === 'loanmanager'){
+    myClosers = getAll('dsaClosers').filter(c => (c.closerType||'loan')==='loan' && (c.assignedManagerId||'') === (CURRENT_USER.entityId||CURRENT_USER.id));
+  } else if(role === 'productmanager' || role === 'servicemanager'){
+    // For product/service managers: scope by dsaClosers.assignedManagerId
+    myClosers = getAll('dsaClosers').filter(c => (c.assignedManagerId||'') === (CURRENT_USER.entityId||CURRENT_USER.id));
+  } else {
+    // Fallback: show all closers (admin may see via this view but it's not exposed to them)
+    myClosers = getAll('dsaClosers');
+  }
+  if(!myClosers.length){
+    document.getElementById('view-team-payouts').innerHTML = '<div class="panel glass"><div class="panel-title">Team Payouts</div><p style="font-size:13px;color:var(--text-faint);padding:20px;">No closers are assigned to you yet.</p></div>';
+    return;
+  }
+  const totalEarned = myClosers.reduce((s,c) => s + walletEarned(c.id), 0);
+  const totalPaid = myClosers.reduce((s,c) => s + walletPaidOut(c.id), 0);
+  const totalBalance = totalEarned - totalPaid;
+  const pendingCount = getAll('withdrawalRequests').filter(w => w.status === 'requested' && myClosers.some(c => c.id === w.closerId)).length;
+  document.getElementById('view-team-payouts').innerHTML = `
+    <div class="panel glass" style="margin-bottom:20px;">
+      <div class="panel-head"><div class="panel-title">Team Overview</div></div>
+      <div class="stat-grid">
+        <div class="stat-card glass"><div class="stat-val">${myClosers.length}</div><div class="stat-label">Closers</div></div>
+        <div class="stat-card glass"><div class="stat-val" style="color:var(--green);">${fmtMoney(totalPaid)}</div><div class="stat-label">Total Paid Out</div></div>
+        <div class="stat-card glass"><div class="stat-val" style="color:${totalBalance>0?'var(--amber)':'var(--text-dim)'};">${fmtMoney(totalBalance)}</div><div class="stat-label">Total Balance Due</div></div>
+        <div class="stat-card glass"><div class="stat-val" style="color:var(--violet);">${pendingCount}</div><div class="stat-label">Pending Requests</div></div>
+      </div>
+      <p style="font-size:12.5px;color:var(--text-faint);margin:14px 0 0;line-height:1.5;">Read-only view — you can see each closer's payout status but only the admin can mark a payout as paid.</p>
+    </div>
+    <div class="panel glass">
+      <div class="panel-head"><div class="panel-title">Closer Payout Status</div></div>
+      <div class="table-wrap"><table class="data-table"><thead><tr><th>Closer</th><th>Total Earned</th><th>Paid Out</th><th>Balance</th><th>Pending Request</th><th>Last Paid</th></tr></thead><tbody>
+        ${myClosers.map(c => {
+          const earned = walletEarned(c.id);
+          const paid = walletPaidOut(c.id);
+          const bal = earned - paid;
+          const pending = getAll('withdrawalRequests').filter(w => w.closerId === c.id && w.status === 'requested').sort((a,b) => new Date(b.requestedDate) - new Date(a.requestedDate))[0];
+          const lastPayout = getAll('walletPayouts').filter(p => p.closerId === c.id).sort((a,b) => new Date(b.createdDate) - new Date(a.createdDate))[0];
+          return `<tr>
+            <td class="cell-strong">${escapeHtml(c.name)}</td>
+            <td>${fmtMoney(earned)}</td>
+            <td style="color:var(--green);">${fmtMoney(paid)}</td>
+            <td style="color:${bal>0?'var(--amber)':'var(--green)'};font-weight:700;">${fmtMoney(bal)}</td>
+            <td>${pending ? '<span class="status-pill status-pending">'+fmtMoney(pending.amount)+'</span>' : '<span class="cell-dim" style="font-size:11px;">—</span>'}</td>
+            <td class="cell-dim" style="font-size:11.5px;">${lastPayout ? fmtDateTime(lastPayout.createdDate) : '—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody></table></div>
+    </div>
+  `;
+}
+
 const RENDER_MAP = {
   dashboard: renderDashboard,
   kanban: renderKanbanView,
@@ -7040,7 +7213,9 @@ const RENDER_MAP = {
   'closer-payout-profile': renderCloserPayoutProfileView,
   'my-materials': renderMyMaterialsView,
   'client-requests': renderClientRequestsView,
-  'closer-payouts-admin': renderCloserPayoutsAdminView
+  'closer-payouts-admin': renderCloserPayoutsAdminView,
+  'team-payouts': renderTeamPayoutsView,
+  'mycloserpayouts': renderMyCloserPayoutsView
 };
 function renderAll(){
   if(!CURRENT_USER) return;
